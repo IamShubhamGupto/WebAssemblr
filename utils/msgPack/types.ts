@@ -40,6 +40,8 @@ export interface Collection<T> extends Type<T> {
 
 export type Obj<T> = { [key: string]: T };
 
+//export type Complex<T> = {real_: float}
+
 export type Field = [string, Type<any>]; // (name, type)
 export type Fields = { readonly [ordinal: number]: Field };
 

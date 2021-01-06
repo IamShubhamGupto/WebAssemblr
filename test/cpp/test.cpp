@@ -26,6 +26,12 @@ public:
     int arr[4];
 };
 
+struct complex_t{
+public:
+    MSGPACK_DEFINE_MAP(real_, imaginary_);
+    long double real_;
+    long double imaginary_;
+};
 
 extern "C" {
     EMSCRIPTEN_KEEPALIVE int addInt(int i, int j)
@@ -149,6 +155,38 @@ extern "C" {
 
         return sbuf.data();
 
+    }
+
+    EMSCRIPTEN_KEEPALIVE char* subtract_complexes(const complex_t a, const complex_t b)
+    {
+        complex_t diff;
+        diff.real_ = a.real_ - b.real_;
+        diff.imaginary_ = a.imaginary_ - b.imaginary_;
+        msgpack::sbuffer sbuf;
+        msgpack::pack(sbuf, diff);
+        return sbuf.data();
+    }
+
+    EMSCRIPTEN_KEEPALIVE char* add_complexes(const complex_t a, const complex_t b)
+    {
+        complex_t sum;
+        sum.real_ = a.real_ + b.real_;
+        sum.imaginary_ = a.imaginary_ + b.imaginary_;
+        msgpack::sbuffer sbuf;
+        msgpack::pack(sbuf, sum);
+        return sbuf.data();
+    }
+
+    EMSCRIPTEN_KEEPALIVE char* multiply_complexes(const complex_t a, const complex_t b)
+    {
+        complex_t product;
+        product.real_ = subtract_complexes((a.real_*b.real_), (a.imaginary_*b.imaginary_))
+        //product.real_ = (a.real_*b.real_) - (a.imag_*b.imag_);
+        //product.imaginary_ = (a.real_*b.imaginary_) + (a.imag_*b.imaginary_);
+        product.imaginary_ = add_complexes((a.real_*b.imaginary_), (a.imaginary_*b.imaginary_))
+        msgpack::sbuffer sbuf;
+        msgpack::pack(sbuf, product);
+        return sbuf.data();
     }
 
 

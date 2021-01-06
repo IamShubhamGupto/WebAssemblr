@@ -156,4 +156,22 @@ describe("C++ Tests", () => {
     const func: Function = () => wasm.returns("object").call().sendObjectToJS;
     runTest(tests, func);
   });
+/*
+  test("Sum of complex numbers", (): void => {
+    interface input {
+      a: number;
+      b: number;
+    }
+    const tests: Test<number, input>[] = [
+      { exp: 0, inp: [{ a: 0, b: 0 }] },
+      { exp: 0, inp: [{ a: 1, b: -1 }] },
+      { exp: 0, inp: [{ a: -100, b: 100 }] },
+      { exp: 1, inp: [{ a: 1, b: 0 }] },
+      { exp: 1, inp: [{ a: 0, b: 1 }] },
+    ];
+
+    const func: Function = () => wasm.returns("number").call().addInt_object;
+    runTest(tests, func);
+  });
+  */
 });
